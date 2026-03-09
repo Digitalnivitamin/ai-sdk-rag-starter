@@ -8,13 +8,13 @@ import Image from "next/image"
 export default function ChatPage() {
 
   const [messages,setMessages] = useState<any[]>([
-    {
-      role:"assistant",
-      content:`Živjo! Jaz sem **Vitaminko**, vaš digitalni svetovalec iz ekipe Digitalni Vitamini.
+  {
+    role:"assistant",
+    content:`Živjo! Jaz sem **Vitaminko**, vaš digitalni svetovalec iz ekipe Digitalni Vitamini. 👋
 
-      👋 Kako vam lahko danes pomagam?`
-    }
-  ])
+    Kako vam lahko danes pomagam?`
+  }
+])
 
   const [input,setInput] = useState("")
   const [loading,setLoading] = useState(false)
