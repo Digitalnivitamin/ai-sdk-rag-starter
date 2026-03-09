@@ -3,10 +3,17 @@
 import { useState, useRef, useEffect } from "react"
 import ReactMarkdown from "react-markdown"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 export default function ChatPage() {
 
-  const [messages,setMessages] = useState<any[]>([])
+  const [messages,setMessages] = useState<any[]>([
+    {
+      role:"assistant",
+      content:"Živjo! Jaz sem **Vitaminko**, vaš digitalni svetovalec iz ekipe Digitalni Vitamini. 👋\n\nKako vam lahko danes pomagam?"
+    }
+  ])
+
   const [input,setInput] = useState("")
   const [loading,setLoading] = useState(false)
 
@@ -61,7 +68,7 @@ export default function ChatPage() {
         AI Website Assistant
       </h1>
 
-      <div className="flex-1 overflow-y-auto space-y-4 mb-6">
+      <div className="flex-1 overflow-y-auto space-y-6 mb-6">
 
         {messages.map((m,i)=>(
 
@@ -69,14 +76,26 @@ export default function ChatPage() {
             key={i}
             initial={{opacity:0,y:10}}
             animate={{opacity:1,y:0}}
-            className={`flex ${m.role==="user"?"justify-end":"justify-start"}`}
+            className={`flex gap-3 ${m.role==="user"?"justify-end":"justify-start"}`}
           >
+
+            {m.role === "assistant" && (
+
+              <Image
+                src="/vitaminko.png"
+                alt="Vitaminko"
+                width={36}
+                height={36}
+                className="rounded-full"
+              />
+
+            )}
 
             <div
               className={
                 m.role==="user"
-                ? "bg-blue-500 text-white p-3 rounded-lg max-w-[75%]"
-                : "bg-gray-100 p-3 rounded-lg max-w-[75%]"
+                ? "bg-blue-500 text-white p-3 rounded-lg max-w-[70%]"
+                : "bg-gray-100 p-3 rounded-lg max-w-[70%]"
               }
             >
 
@@ -91,11 +110,11 @@ export default function ChatPage() {
         ))}
 
         {loading && (
-
-          <div className="text-gray-500 text-sm">
-            AI is typing...
+        
+          <div className="text-gray-500 text-sm italic">
+            Vitaminko pripravlja odgovor...
           </div>
-
+        
         )}
 
         <div ref={bottomRef}/>
@@ -107,7 +126,7 @@ export default function ChatPage() {
         <input
           value={input}
           onChange={(e)=>setInput(e.target.value)}
-          placeholder="Kako vam lahko pomagam..."
+          placeholder="Vprašajte Vitaminka..."
           className="flex-1 border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
@@ -115,7 +134,7 @@ export default function ChatPage() {
           disabled={loading}
           className="bg-black text-white px-5 py-3 rounded-lg disabled:opacity-40"
         >
-          Vprašaj
+          Pošlji
         </button>
 
       </form>
