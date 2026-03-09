@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import OpenAI from "openai";
 import { supabase } from "@/lib/supabase";
 import { getSiteUrls } from "@/lib/sitemap";
