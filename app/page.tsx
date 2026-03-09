@@ -111,9 +111,60 @@ export default function ChatPage() {
               }
             >
 
-              <ReactMarkdown className="prose prose-sm">
-                {m.content}
-              </ReactMarkdown>
+              <ReactMarkdown
+  className="max-w-none text-[14px] leading-relaxed"
+  components={{
+
+    p: ({node, ...props}) => (
+      <p className="mb-4 leading-relaxed" {...props} />
+    ),
+
+    em: ({node, ...props}) => (
+      <em className="italic text-gray-700" {...props} />
+    ),
+
+    ul: ({node, ...props}) => (
+      <ul className="list-disc ml-6 mb-4 space-y-1 text-gray-800" {...props} />
+    ),
+
+    ol: ({node, ...props}) => (
+      <ol className="list-decimal ml-6 mb-4 space-y-1 text-gray-800" {...props} />
+    ),
+
+    li: ({node, ...props}) => (
+      <li className="italic" {...props} />
+    ),
+
+    a: ({node, ...props}) => (
+      <a
+        className="underline text-blue-600 hover:text-blue-800"
+        target="_blank"
+        {...props}
+      />
+    ),
+
+    table: ({node, ...props}) => (
+      <div className="overflow-x-auto mb-4">
+        <table className="w-full border border-gray-200 text-sm" {...props} />
+      </div>
+    ),
+
+    thead: ({node, ...props}) => (
+      <thead className="bg-gray-100 text-left" {...props} />
+    ),
+
+    th: ({node, ...props}) => (
+      <th className="border px-3 py-2 font-semibold" {...props} />
+    ),
+
+    td: ({node, ...props}) => (
+      <td className="border px-3 py-2" {...props} />
+    )
+
+  }}
+>
+  {m.content}
+</ReactMarkdown>
 
               {/* SOURCE LINKS */}
 
