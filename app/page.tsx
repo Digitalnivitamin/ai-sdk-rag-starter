@@ -10,7 +10,8 @@ export default function ChatPage() {
   const [messages,setMessages] = useState<any[]>([
     {
       role:"assistant",
-      content:"Živjo! Jaz sem **Vitaminko**, vaš digitalni svetovalec iz ekipe Digitalni Vitamini. 👋\n\nKako vam lahko danes pomagam?"
+      content:"Živjo! Jaz sem **Vitaminko**, vaš digitalni svetovalec iz ekipe Digitalni Vitamini. 
+      👋\n\nKako vam lahko danes pomagam?"
     }
   ])
 
@@ -23,13 +24,22 @@ export default function ChatPage() {
     bottomRef.current?.scrollIntoView({behavior:"smooth"})
   },[messages])
 
-  async function ask(e:any){
+  const quickQuestions = [
+    "Kako lahko digitalna avtomatizacija pomaga našemu podjetju?",
+    "Katere digitalne rešitve ponujate podjetjem?",
+    "Ali mi lahko pokažete primere projektov?",
+    "Kako lahko izboljšamo naše poslovne procese?"
+  ]
 
-    e.preventDefault()
+  async function ask(e:any, customQuestion?:string){
 
-    if(!input.trim()) return
+    if(e) e.preventDefault()
 
-    const userMessage = {role:"user",content:input}
+    const question = customQuestion || input
+
+    if(!question.trim()) return
+
+    const userMessage = {role:"user",content:question}
 
     setMessages(prev=>[...prev,userMessage])
 
@@ -41,7 +51,7 @@ export default function ChatPage() {
         "Content-Type":"application/json"
       },
       body:JSON.stringify({
-        message:input
+        message:question
       })
     })
 
@@ -51,7 +61,8 @@ export default function ChatPage() {
       ...prev,
       {
         role:"assistant",
-        content:data.answer
+        content:data.answer,
+        sources:data.sources
       }
     ])
 
@@ -65,7 +76,7 @@ export default function ChatPage() {
     <main className="max-w-3xl mx-auto p-6 h-screen flex flex-col">
 
       <h1 className="text-2xl font-bold mb-6">
-        AI Website Assistant
+        Vitaminko AI Svetovalec
       </h1>
 
       <div className="flex-1 overflow-y-auto space-y-6 mb-6">
@@ -103,11 +114,68 @@ export default function ChatPage() {
                 {m.content}
               </ReactMarkdown>
 
+              {/* SOURCE LINKS */}
+
+              {m.sources && (
+
+                <div className="mt-2 text-xs text-gray-500">
+
+                  Vir:
+
+                  {m.sources.slice(0,2).map((s:any,i:number)=>(
+                    <div key={i}>
+                      <a
+                        href={s}
+                        target="_blank"
+                        className="underline"
+                      >
+                        {s}
+                      </a>
+                    </div>
+                  ))}
+
+                </div>
+
+              )}
+
+              {/* COPY BUTTON */}
+
+              {m.role === "assistant" && (
+
+                <button
+                  onClick={()=>navigator.clipboard.writeText(m.content)}
+                  className="text-xs text-gray-400 mt-2 hover:text-black"
+                >
+                  Kopiraj odgovor
+                </button>
+
+              )}
+
             </div>
 
           </motion.div>
 
         ))}
+
+        {/* QUICK BUTTONS */}
+
+        {messages.length === 1 && (
+
+          <div className="flex flex-wrap gap-2">
+
+            {quickQuestions.map((q,i)=>(
+              <button
+                key={i}
+                onClick={()=>ask(null,q)}
+                className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition"
+              >
+                {q}
+              </button>
+            ))}
+
+          </div>
+
+        )}
 
         {loading && (
         
