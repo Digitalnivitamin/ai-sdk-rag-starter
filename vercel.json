@@ -4,5 +4,10 @@
       "path": "/api/index",
       "schedule": "0 3 * * *"
     }
-  ]
+  ],
+  "functions": {
+    "app/api/index/route.ts": {
+      "maxDuration": 60
+    }
+  }
 }
