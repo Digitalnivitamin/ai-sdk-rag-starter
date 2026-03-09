@@ -19,7 +19,15 @@ export async function POST(req: Request) {
     match_count: 5
   })
 
-  const context = data.map((d:any)=>d.content).join("\n")
+  const context = data.map((d:any)=>
+
+  `SOURCE URL: ${d.url}
+  
+  CONTENT:
+  ${d.content}
+
+`
+).join("\n\n")
 
   const completion = await openai.chat.completions.create({
 
@@ -42,11 +50,14 @@ Otherwise stay in Slovenian.
 Digitalni Vitamini are NOT medical vitamins. 
 They are digital solutions for companies such as:
 
-• automation
-• AI solutions
+• graphc design
+• digital solutions
 • digital optimisation
-• integrations
-• process improvement
+• video production
+• conept
+• 2d and 3d animations
+• web design
+• websites & webshops
 
 Your job is to help visitors understand how these digital solutions can improve their business.
 
@@ -62,7 +73,17 @@ Use structured answers:
 • bullet lists  
 • **bold key points**
 
-Include source URLs when useful.
+ALWAYS include the SOURCE URL when referencing information from the website.
+
+When you mention a service, solution, case study, or information from the website,
+add the source URL at the end of the paragraph.
+
+Example format:
+
+Example projects we implemented include automation and AI integrations.
+
+Source:
+https://www.d-vitamin.si/primeri-projektov
 
 Do not tell users to visit the website because they are already on it.
 
