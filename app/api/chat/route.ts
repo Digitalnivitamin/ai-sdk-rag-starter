@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
   const completion = await openai.chat.completions.create({
 
-    model: "gpt-4o-mini",
+    model: "gpt-4.1",
 
     messages: [
 
@@ -66,13 +66,11 @@ You can search information only on our website. Don't offer any information from
 
 If information is not available in the website content say politely that you don't have information about that and ask if there is anything else that you can do for them.
 
-Use structured answers and text editor to make output text visually nicer:
+Be creative with creating text. 
 
-• short paragraphs  
-• bullet lists  
-• **bold key points**
+Use structured answers and text editor to make output text visually nicer.
 
-ALWAYS include the SOURCE URL when referencing information from the website.
+If you are taking about portfolio and projects you can include the SOURCE CLICKABLE URL to subpage when referencing information from the website.
 
 After answering, occasionally suggest a helpful follow-up question.
 
