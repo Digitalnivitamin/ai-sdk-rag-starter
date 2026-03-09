@@ -1,67 +1,66 @@
 'use client'
 
-import { useState } from 'react'
+import { useChat } from "ai/react"
+import { useRef, useEffect } from "react"
 
-export default function Page() {
+export default function ChatPage() {
 
-  const [question, setQuestion] = useState('')
-  const [answer, setAnswer] = useState('')
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    api: "/api/chat"
+  })
 
-  async function ask() {
+  const bottomRef = useRef<HTMLDivElement>(null)
 
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: question
-      })
-    })
-
-    const data = await res.json()
-
-    setAnswer(data.answer)
-
-  }
+  useEffect(()=>{
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+  },[messages])
 
   return (
 
-    <main style={{
-      maxWidth: 800,
-      margin: '80px auto',
-      fontFamily: 'sans-serif'
-    }}>
+    <main className="max-w-3xl mx-auto p-6">
 
-      <h1>AI Website Assistant</h1>
+      <h1 className="text-2xl font-bold mb-6">
+        AI Website Assistant
+      </h1>
 
-      <input
-        style={{
-          width: '100%',
-          padding: 12,
-          fontSize: 16
-        }}
-        placeholder="Ask something..."
-        value={question}
-        onChange={(e)=>setQuestion(e.target.value)}
-      />
+      <div className="space-y-4 mb-6">
 
-      <button
-        style={{
-          marginTop: 12,
-          padding: 10
-        }}
-        onClick={ask}
-      >
-        Ask
-      </button>
+        {messages.map((m,i)=>(
+          <div
+            key={i}
+            className={
+              m.role === "user"
+              ? "bg-blue-100 p-3 rounded"
+              : "bg-gray-100 p-3 rounded"
+            }
+          >
+            {m.content}
+          </div>
+        ))}
 
-      <p style={{marginTop:30}}>
-        {answer}
-      </p>
+        <div ref={bottomRef} />
+
+      </div>
+
+      <form onSubmit={handleSubmit} className="flex gap-2">
+
+        <input
+          value={input}
+          onChange={handleInputChange}
+          placeholder="Ask about vitamin D..."
+          className="flex-1 border rounded p-2"
+        />
+
+        <button
+          disabled={isLoading}
+          className="bg-black text-white px-4 py-2 rounded disabled:opacity-50"
+        >
+          Ask
+        </button>
+
+      </form>
 
     </main>
 
   )
-
 }
