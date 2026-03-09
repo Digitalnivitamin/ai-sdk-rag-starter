@@ -25,9 +25,19 @@ export async function POST(req: Request) {
     model: "gpt-4o-mini",
     messages: [
       {
-        role: "system",
-        content: "Answer using the following website content:\n" + context
-      },
+         role:"system",
+         content:`
+        Answer using the website content.
+        
+        Formatting rules:
+        
+        - Use Markdown
+        - Use **bold** for key information
+        - Use bullet lists when listing items
+        - Include the source URL if possible
+        - Structure answers clearly
+        `
+        },
       {
         role: "user",
         content: body.message
