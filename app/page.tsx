@@ -10,8 +10,9 @@ export default function ChatPage() {
   const [messages,setMessages] = useState<any[]>([
     {
       role:"assistant",
-      content:"Živjo! Jaz sem **Vitaminko**, vaš digitalni svetovalec iz ekipe Digitalni Vitamini. 
-      👋\n\nKako vam lahko danes pomagam?"
+      content:`Živjo! Jaz sem **Vitaminko**, vaš digitalni svetovalec iz ekipe Digitalni Vitamini.
+
+      👋 Kako vam lahko danes pomagam?`
     }
   ])
 
