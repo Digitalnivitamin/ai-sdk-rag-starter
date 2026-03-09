@@ -37,6 +37,7 @@
     "tailwindcss-animate": "^1.0.7",
     "fast-xml-parser": "^4.3.6",
     "node-fetch": "^3.3.2",
+    "openai": "^4.56.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
