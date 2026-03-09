@@ -26,7 +26,6 @@ export default function ChatPage() {
   },[messages])
 
   const quickQuestions = [
-    "Kako lahko digitalna avtomatizacija pomaga našemu podjetju?",
     "Katere digitalne rešitve ponujate podjetjem?",
     "Ali mi lahko pokažete primere projektov?",
     "Kako lahko izboljšamo naše poslovne procese?"
