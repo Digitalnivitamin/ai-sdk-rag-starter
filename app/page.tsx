@@ -132,7 +132,7 @@ export default function ChatPage() {
     ),
 
     li: ({node, ...props}) => (
-      <li className="italic" {...props} />
+      <li {...props} />
     ),
 
     a: ({node, ...props}) => (
