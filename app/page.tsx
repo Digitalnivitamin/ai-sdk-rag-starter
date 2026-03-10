@@ -82,7 +82,7 @@ Kako vam lahko danes pomagam?`
           alt="Vitaminko"
           width={34}
           height={34}
-          className="rounded-full"
+          className="rounded-full flex-shrink-0"
           unoptimized
         />
 
@@ -139,7 +139,7 @@ Kako vam lahko danes pomagam?`
                   ),
 
                   p: ({node, ...props}) => (
-                    <p className="mb-4 leading-relaxed" {...props} />
+                    <p className="mb-4 leading-relaxed text-black" {...props} />
                   ),
 
                   strong: ({node, ...props}) => (
