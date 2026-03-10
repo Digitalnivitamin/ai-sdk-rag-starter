@@ -2,19 +2,19 @@
 
 import { useState, useRef, useEffect } from "react"
 import ReactMarkdown from "react-markdown"
-import { motion } from "framer-motion"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 export default function ChatPage() {
 
   const [messages,setMessages] = useState<any[]>([
-  {
-    role:"assistant",
-    content:`Živjo! Jaz sem **Vitaminko**, vaš digitalni svetovalec iz ekipe Digitalni Vitamini. 👋
+    {
+      role:"assistant",
+      content:`Živjo! Jaz sem **Vitaminko**, vaš digitalni svetovalec iz ekipe Digitalni Vitamini. 👋
 
-    Kako vam lahko danes pomagam?`
-  }
-])
+Kako vam lahko danes pomagam?`
+    }
+  ])
 
   const [input,setInput] = useState("")
   const [loading,setLoading] = useState(false)
@@ -26,7 +26,8 @@ export default function ChatPage() {
   },[messages])
 
   const quickQuestions = [
-    "Katere digitalne rešitve ponujate podjetjem?",
+    "Kako lahko digitalna avtomatizacija pomaga podjetju?",
+    "Katere digitalne rešitve ponujate?",
     "Ali mi lahko pokažete primere projektov?",
     "Kako lahko izboljšamo naše poslovne procese?"
   ]
@@ -42,7 +43,6 @@ export default function ChatPage() {
     const userMessage = {role:"user",content:question}
 
     setMessages(prev=>[...prev,userMessage])
-
     setLoading(true)
 
     const res = await fetch("/api/chat",{
@@ -68,18 +68,34 @@ export default function ChatPage() {
 
     setInput("")
     setLoading(false)
-
   }
 
   return (
 
-    <main className="max-w-3xl mx-auto p-6 h-screen flex flex-col">
+    <main className="h-screen flex flex-col bg-white">
 
-      <h1 className="text-2xl font-bold mb-6">
-        Vitaminko AI Svetovalec
-      </h1>
+      {/* HEADER */}
 
-      <div className="flex-1 overflow-y-auto space-y-6 mb-6">
+      <div className="border-b px-6 py-4 flex items-center gap-3">
+
+        <Image
+          src="/vitaminko.png"
+          alt="Vitaminko"
+          width={34}
+          height={34}
+          className="rounded-full"
+          unoptimized
+        />
+
+        <div className="font-semibold text-[15px]">
+          Vitaminko AI Svetovalec
+        </div>
+
+      </div>
+
+      {/* CHAT AREA */}
+
+      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
 
         {messages.map((m,i)=>(
 
@@ -87,17 +103,18 @@ export default function ChatPage() {
             key={i}
             initial={{opacity:0,y:10}}
             animate={{opacity:1,y:0}}
-            className={`flex gap-3 ${m.role==="user"?"justify-end":"justify-start"}`}
+            className={`flex gap-4 ${m.role==="user"?"justify-end":"justify-start"}`}
           >
 
-            {m.role === "assistant" && (
+            {m.role==="assistant" && (
 
               <Image
-                src="/images/vitaminko.png"
+                src="/vitaminko.png"
                 alt="Vitaminko"
-                width={36}
-                height={36}
-                className="rounded-full"
+                width={32}
+                height={32}
+                className="rounded-full mt-1"
+                unoptimized
               />
 
             )}
@@ -105,118 +122,88 @@ export default function ChatPage() {
             <div
               className={
                 m.role==="user"
-                ? "bg-blue-500 text-white p-3 rounded-lg max-w-[70%]"
-                : "bg-gray-100 p-3 rounded-lg max-w-[70%]"
+                ? "bg-black text-white px-4 py-3 rounded-xl max-w-[70%] text-[14.5px]"
+                : "bg-gray-50 border border-gray-200 px-4 py-3 rounded-xl max-w-[70%]"
               }
             >
 
               <ReactMarkdown
-  className="max-w-none text-[14.5px] leading-relaxed text-gray-800"
-  components={{
+                className="max-w-none text-[14.5px] leading-relaxed text-gray-800"
+                components={{
 
-    p: ({node, ...props}) => (
-      <p className="mb-4 leading-relaxed text-[14.5px]" {...props} />
-    ),
+                  h2: ({node, ...props}) => (
+                    <h2 className="text-[17px] font-semibold mt-4 mb-2" {...props} />
+                  ),
 
-    strong: ({node, ...props}) => (
-      <strong className="font-semibold text-gray-900" {...props} />
-    ),
+                  h3: ({node, ...props}) => (
+                    <h3 className="text-[15.5px] font-semibold mt-3 mb-2" {...props} />
+                  ),
 
-    em: ({node, ...props}) => (
-      <em className="italic text-gray-700" {...props} />
-    ),
+                  p: ({node, ...props}) => (
+                    <p className="mb-4 leading-relaxed" {...props} />
+                  ),
 
-    ul: ({node, ...props}) => (
-      <ul className="list-disc ml-6 mb-4 space-y-2 marker:text-gray-500" {...props} />
-    ),
+                  strong: ({node, ...props}) => (
+                    <strong className="font-semibold text-gray-900" {...props} />
+                  ),
 
-    ol: ({node, ...props}) => (
-      <ol className="list-decimal ml-6 mb-4 space-y-2 marker:text-gray-500" {...props} />
-    ),
+                  ul: ({node, ...props}) => (
+                    <ul className="list-disc ml-6 mb-5 space-y-2 marker:text-gray-500" {...props} />
+                  ),
 
-    li: ({node, ...props}) => (
-      <li className="pl-1 italic" {...props} />
-    ),
+                  ol: ({node, ...props}) => (
+                    <ol className="list-decimal ml-6 mb-5 space-y-2 marker:text-gray-500" {...props} />
+                  ),
 
-    a: ({node, ...props}) => (
-      <a
-        className="underline text-blue-600 hover:text-blue-800 transition font-medium"
-        target="_blank"
-        {...props}
-      />
-    ),
+                  a: ({node, ...props}) => (
+                    <a
+                      className="underline text-blue-600 hover:text-blue-800"
+                      target="_blank"
+                      {...props}
+                    />
+                  ),
 
-    code: ({node, ...props}) => (
-      <code
-        className="bg-gray-100 px-1.5 py-0.5 rounded text-[13px] font-mono"
-        {...props}
-      />
-    ),
+                  table: ({node, ...props}) => (
+                    <div className="overflow-x-auto mb-4">
+                      <table className="w-full border border-gray-200 text-sm rounded-lg overflow-hidden" {...props} />
+                    </div>
+                  ),
 
-    pre: ({node, ...props}) => (
-      <pre
-        className="bg-gray-100 p-3 rounded-lg overflow-x-auto mb-4 text-[13px]"
-        {...props}
-      />
-    ),
+                  thead: ({node, ...props}) => (
+                    <thead className="bg-gray-100 text-left" {...props} />
+                  ),
 
-    table: ({node, ...props}) => (
-      <div className="overflow-x-auto mb-4">
-        <table className="w-full border border-gray-200 text-[13.5px] rounded-lg overflow-hidden" {...props} />
-      </div>
-    ),
+                  th: ({node, ...props}) => (
+                    <th className="border px-3 py-2 font-semibold text-gray-700" {...props} />
+                  ),
 
-    thead: ({node, ...props}) => (
-      <thead className="bg-gray-100 text-left text-gray-700" {...props} />
-    ),
+                  td: ({node, ...props}) => (
+                    <td className="border px-3 py-2" {...props} />
+                  )
 
-    th: ({node, ...props}) => (
-      <th className="border px-3 py-2 font-semibold" {...props} />
-    ),
+                }}
+              >
+                {m.content}
+              </ReactMarkdown>
 
-    td: ({node, ...props}) => (
-      <td className="border px-3 py-2 text-gray-700" {...props} />
-    )
-
-  }}
->
-  {m.content}
-</ReactMarkdown>
-
-              {/* SOURCE LINKS */}
+              {/* SOURCES */}
 
               {m.sources && (
 
-                <div className="mt-2 text-xs text-gray-500">
-
-                  Vir:
+                <div className="mt-3 flex flex-wrap gap-2">
 
                   {m.sources.slice(0,2).map((s:any,i:number)=>(
-                    <div key={i}>
-                      <a
-                        href={s}
-                        target="_blank"
-                        className="underline"
-                      >
-                        {s}
-                      </a>
-                    </div>
+                    <a
+                      key={i}
+                      href={s}
+                      target="_blank"
+                      className="text-xs bg-gray-100 px-2 py-1 rounded-md hover:bg-gray-200 transition"
+                    >
+                      🔗 Vir
+                    </a>
                   ))}
 
                 </div>
-
-              )}
-
-              {/* COPY BUTTON */}
-
-              {m.role === "assistant" && (
-
-                <button
-                  onClick={()=>navigator.clipboard.writeText(m.content)}
-                  className="text-xs text-gray-400 mt-2 hover:text-black"
-                >
-                  Kopiraj odgovor
-                </button>
 
               )}
 
@@ -225,8 +212,6 @@ export default function ChatPage() {
           </motion.div>
 
         ))}
-
-        {/* QUICK BUTTONS */}
 
         {messages.length === 1 && (
 
@@ -247,29 +232,34 @@ export default function ChatPage() {
         )}
 
         {loading && (
-        
-          <div className="text-gray-500 text-sm italic">
-            Vitaminko pripravlja odgovor...
+
+          <div className="text-gray-400 text-sm italic">
+            Vitaminko razmišlja...
           </div>
-        
+
         )}
 
         <div ref={bottomRef}/>
 
       </div>
 
-      <form onSubmit={ask} className="flex gap-2">
+      {/* INPUT */}
+
+      <form
+        onSubmit={ask}
+        className="border-t px-6 py-4 flex gap-3"
+      >
 
         <input
           value={input}
           onChange={(e)=>setInput(e.target.value)}
           placeholder="Vprašajte Vitaminka..."
-          className="flex-1 border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="flex-1 border rounded-xl px-4 py-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-black"
         />
 
         <button
           disabled={loading}
-          className="bg-black text-white px-5 py-3 rounded-lg disabled:opacity-40"
+          className="bg-black text-white px-5 py-3 rounded-xl disabled:opacity-40"
         >
           Pošlji
         </button>
