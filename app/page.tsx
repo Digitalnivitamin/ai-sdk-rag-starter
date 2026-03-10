@@ -26,10 +26,9 @@ Kako vam lahko danes pomagam?`
   },[messages])
 
   const quickQuestions = [
-    "Kako lahko digitalna avtomatizacija pomaga podjetju?",
+    "S čim se ukvarjate?",
     "Katere digitalne rešitve ponujate?",
-    "Ali mi lahko pokažete primere projektov?",
-    "Kako lahko izboljšamo naše poslovne procese?"
+    "O podjetju",
   ]
 
   async function ask(e:any, customQuestion?:string){
