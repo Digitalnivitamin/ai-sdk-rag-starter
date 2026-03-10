@@ -93,7 +93,6 @@ export default function ChatPage() {
             {m.role === "assistant" && (
 
               <Image
-                class="h-10 w-10 rounded-full"
                 src="/images/vitaminko.png"
                 alt="Vitaminko"
                 width={36}
@@ -112,11 +111,15 @@ export default function ChatPage() {
             >
 
               <ReactMarkdown
-  className="max-w-none text-[14px] leading-relaxed"
+  className="max-w-none text-[14.5px] leading-relaxed text-gray-800"
   components={{
 
     p: ({node, ...props}) => (
-      <p className="mb-4 leading-relaxed" {...props} />
+      <p className="mb-4 leading-relaxed text-[14.5px]" {...props} />
+    ),
+
+    strong: ({node, ...props}) => (
+      <strong className="font-semibold text-gray-900" {...props} />
     ),
 
     em: ({node, ...props}) => (
@@ -124,33 +127,47 @@ export default function ChatPage() {
     ),
 
     ul: ({node, ...props}) => (
-      <ul className="list-disc ml-6 mb-4 space-y-1 text-gray-800" {...props} />
+      <ul className="list-disc ml-6 mb-4 space-y-2 marker:text-gray-500" {...props} />
     ),
 
     ol: ({node, ...props}) => (
-      <ol className="list-decimal ml-6 mb-4 space-y-1 text-gray-800" {...props} />
+      <ol className="list-decimal ml-6 mb-4 space-y-2 marker:text-gray-500" {...props} />
     ),
 
     li: ({node, ...props}) => (
-      <li {...props} />
+      <li className="pl-1 italic" {...props} />
     ),
 
     a: ({node, ...props}) => (
       <a
-        className="underline text-blue-600 hover:text-blue-800"
+        className="underline text-blue-600 hover:text-blue-800 transition font-medium"
         target="_blank"
+        {...props}
+      />
+    ),
+
+    code: ({node, ...props}) => (
+      <code
+        className="bg-gray-100 px-1.5 py-0.5 rounded text-[13px] font-mono"
+        {...props}
+      />
+    ),
+
+    pre: ({node, ...props}) => (
+      <pre
+        className="bg-gray-100 p-3 rounded-lg overflow-x-auto mb-4 text-[13px]"
         {...props}
       />
     ),
 
     table: ({node, ...props}) => (
       <div className="overflow-x-auto mb-4">
-        <table className="w-full border border-gray-200 text-sm" {...props} />
+        <table className="w-full border border-gray-200 text-[13.5px] rounded-lg overflow-hidden" {...props} />
       </div>
     ),
 
     thead: ({node, ...props}) => (
-      <thead className="bg-gray-100 text-left" {...props} />
+      <thead className="bg-gray-100 text-left text-gray-700" {...props} />
     ),
 
     th: ({node, ...props}) => (
@@ -158,7 +175,7 @@ export default function ChatPage() {
     ),
 
     td: ({node, ...props}) => (
-      <td className="border px-3 py-2" {...props} />
+      <td className="border px-3 py-2 text-gray-700" {...props} />
     )
 
   }}
