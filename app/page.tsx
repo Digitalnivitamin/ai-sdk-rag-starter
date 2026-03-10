@@ -109,7 +109,7 @@ Kako vam lahko danes pomagam?`
             {m.role==="assistant" && (
 
               <Image
-                src="/vitaminko.png"
+                src="/images/vitaminko.png"
                 alt="Vitaminko"
                 width={32}
                 height={32}
