@@ -122,7 +122,7 @@ Kako vam lahko danes pomagam?`
               className={
                 m.role==="user"
                 ? "bg-blue-600 text-white px-4 py-3 rounded-xl max-w-[70%] text-[14.5px]"
-                : "bg-gray-50 border border-gray-200 px-4 py-3 rounded-xl max-w-[70%]"
+                : "bg-gray-50 border text-black border-gray-200 px-4 py-3 rounded-xl max-w-[70%]"
               }
             >
 
