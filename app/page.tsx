@@ -112,7 +112,7 @@ Kako vam lahko danes pomagam?`
                 alt="Vitaminko"
                 width={32}
                 height={32}
-                className="rounded-full mt-1"
+                className="rounded-full mt-1 text-black"
                 unoptimized
               />
 
