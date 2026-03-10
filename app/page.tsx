@@ -80,7 +80,6 @@ Kako vam lahko danes pomagam?`
 
         <Image
           src="/images/vitaminko.png"
-          className=""
           alt="Vitaminko"
           width={34}
           height={34}
