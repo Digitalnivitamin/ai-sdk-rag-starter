@@ -121,13 +121,13 @@ Kako vam lahko danes pomagam?`
             <div
               className={
                 m.role==="user"
-                ? "bg-black text-white px-4 py-3 rounded-xl max-w-[70%] text-[14.5px]"
+                ? "bg-blue-600 text-white px-4 py-3 rounded-xl max-w-[70%] text-[14.5px]"
                 : "bg-gray-50 border border-gray-200 px-4 py-3 rounded-xl max-w-[70%]"
               }
             >
 
               <ReactMarkdown
-                className="max-w-none text-[14.5px] leading-relaxed text-gray-800"
+                className="max-w-none text-[14.5px] leading-relaxed text-white"
                 components={{
 
                   h2: ({node, ...props}) => (
