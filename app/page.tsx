@@ -93,7 +93,7 @@ export default function ChatPage() {
             {m.role === "assistant" && (
 
               <Image
-                src="./vitaminko.png"
+                src="/images/vitaminko.png"
                 alt="Vitaminko"
                 width={36}
                 height={36}
