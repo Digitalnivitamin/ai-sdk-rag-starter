@@ -79,7 +79,8 @@ Kako vam lahko danes pomagam?`
       <div className="border-b px-6 py-4 flex items-center gap-3">
 
         <Image
-          src="/vitaminko.png"
+          src="/images/vitaminko.png"
+          className=""
           alt="Vitaminko"
           width={34}
           height={34}
