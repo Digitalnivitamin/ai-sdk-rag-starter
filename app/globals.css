@@ -74,3 +74,25 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* 🔥 CHAT UI STYLES */
+
+@layer components {
+
+  .bubble-user {
+    @apply bg-blue-600 text-white;
+  }
+
+  .bubble-assistant {
+    @apply bg-gray-100 border border-gray-200 text-gray-900;
+  }
+
+  .markdown-user {
+    @apply text-white;
+  }
+
+  .markdown-assistant {
+    @apply text-gray-900;
+  }
+
+}
