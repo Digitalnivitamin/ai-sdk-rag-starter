@@ -137,36 +137,40 @@ Kako vam lahko danes pomagam?`
                 components={{
 
                   h2: ({...props}) => (
-                    <h2 className="text-[17px] font-semibold mt-4 mb-2" {...props} />
-                  ),
-
-                  h3: ({...props}) => (
-                    <h3 className="text-[15.5px] font-semibold mt-3 mb-2" {...props} />
-                  ),
-
-                  p: ({...props}) => (
-                    <p className="mb-3 leading-relaxed" {...props} />
-                  ),
-
-                  strong: ({...props}) => (
-                    <strong className="font-semibold" {...props} />
-                  ),
-
-                 ul: ({...props}) => (
-                    <ul className="ml-4 mb-4 space-y-1" {...props} />
-                  ),
-                  
-                  ol: ({...props}) => (
-                    <ol className="ml-4 mb-4 space-y-1" {...props} />
-                  ),
-
-                  a: ({...props}) => (
-                    <a
-                      className="underline text-blue-600 hover:text-blue-800"
-                      target="_blank"
-                      {...props}
-                    />
-                  ),
+                  <h2 className="text-[17px] font-semibold mt-4 mb-2" {...props} />
+                ),
+              
+                h3: ({...props}) => (
+                  <h3 className="text-[15.5px] font-semibold mt-3 mb-2" {...props} />
+                ),
+              
+                p: ({...props}) => (
+                  <p className="mb-3 leading-relaxed" {...props} />
+                ),
+              
+                strong: ({...props}) => (
+                  <strong className="font-semibold" {...props} />
+                ),
+              
+                ul: ({...props}) => (
+                  <ul className="list-disc ml-5 mb-4 space-y-1 marker:text-gray-400" {...props} />
+                ),
+              
+                ol: ({...props}) => (
+                  <ol className="list-decimal ml-5 mb-4 space-y-1 marker:text-gray-400" {...props} />
+                ),
+              
+                li: ({...props}) => (
+                  <li className="leading-relaxed" {...props} />
+                ),
+              
+                a: ({...props}) => (
+                  <a
+                    className="underline text-blue-600 hover:text-blue-800"
+                    target="_blank"
+                    {...props}
+                  />
+                ),
 
                   table: ({...props}) => (
                     <div className="overflow-x-auto mb-4">
@@ -191,36 +195,41 @@ Kako vam lahko danes pomagam?`
                 {m.content}
               </ReactMarkdown>
 
-              {m.sources && (
-              
-                <div className="mt-4 space-y-2">
-              
-                  {m.sources.slice(0,2).map((s:any,i:number)=>(
-                    
-                    <div
-                      key={i}
-                      className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-[13px] italic"
-                    >
-              
-                      <span className="font-medium not-italic mr-1">
-                        Več info:
-                      </span>
-              
-                      <a
-                        href={s}
-                        target="_blank"
-                        className="underline break-all hover:text-blue-600 transition"
-                      >
-                        {s}
-                      </a>
-              
-                    </div>
-              
-                  ))}
-              
-                </div>
-              
-              )}
+              {Array.isArray(m.sources) && m.sources.length > 0 && (
+
+  <div className="mt-4 space-y-2">
+
+    {m.sources.slice(0,2).map((s:any,i:number)=>{
+
+      const url = typeof s === "string" ? s : s?.url
+
+      if(!url) return null
+
+      return (
+        <div
+          key={i}
+          className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-[13px] italic"
+        >
+
+          <span className="font-medium not-italic mr-1">
+            Več info:
+          </span>
+
+          <a
+            href={url}
+            target="_blank"
+            className="underline break-all hover:text-blue-600 transition"
+          >
+            {url}
+          </a>
+
+        </div>
+      )
+    })}
+
+  </div>
+
+)}
 
             </div>
 
