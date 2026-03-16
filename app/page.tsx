@@ -145,19 +145,19 @@ Kako vam lahko danes pomagam?`
                   ),
 
                   p: ({...props}) => (
-                    <p className="mb-4 leading-relaxed" {...props} />
+                    <p className="mb-3 leading-relaxed" {...props} />
                   ),
 
                   strong: ({...props}) => (
                     <strong className="font-semibold" {...props} />
                   ),
 
-                  ul: ({...props}) => (
-                    <ul className="list-disc ml-6 mb-5 space-y-2" {...props} />
+                 ul: ({...props}) => (
+                    <ul className="ml-4 mb-4 space-y-1" {...props} />
                   ),
-
+                  
                   ol: ({...props}) => (
-                    <ol className="list-decimal ml-6 mb-5 space-y-2" {...props} />
+                    <ol className="ml-4 mb-4 space-y-1" {...props} />
                   ),
 
                   a: ({...props}) => (
