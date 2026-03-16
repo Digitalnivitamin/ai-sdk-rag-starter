@@ -130,66 +130,40 @@ Kako vam lahko danes pomagam?`
 
               <ReactMarkdown
                 className={
-                  m.role==="user"
-                  ? "markdown-user text-[14.5px] leading-relaxed"
-                  : "markdown-assistant text-[14.5px] leading-relaxed"
+                  m.role === "user"
+                    ? "prose prose-sm max-w-none prose-invert"
+                    : "prose prose-sm max-w-none"
                 }
                 components={{
-
-                  h2: ({...props}) => (
-                  <h2 className="text-[17px] font-semibold mt-4 mb-2" {...props} />
-                ),
               
-                h3: ({...props}) => (
-                  <h3 className="text-[15.5px] font-semibold mt-3 mb-2" {...props} />
-                ),
+                  // 👉 pustimo samo stvari, ki jih prose ne pokrije idealno
               
-                p: ({...props}) => (
-                  <p className="mb-3 leading-relaxed" {...props} />
-                ),
+                  a: ({...props}) => (
+                    <a
+                      className="underline text-blue-600 hover:text-blue-800 break-all"
+                      target="_blank"
+                      {...props}
+                    />
+                  ),
               
-                strong: ({...props}) => (
-                  <strong className="font-semibold" {...props} />
-                ),
-              
-                ul: ({...props}) => (
-                  <ul className="list-disc ml-5 mb-4 space-y-1 marker:text-gray-400" {...props} />
-                ),
-              
-                ol: ({...props}) => (
-                  <ol className="list-decimal ml-5 mb-4 space-y-1 marker:text-gray-400" {...props} />
-                ),
-              
-                li: ({...props}) => (
-                  <li className="leading-relaxed" {...props} />
-                ),
-              
-                a: ({...props}) => (
-                  <a
-                    className="underline text-blue-600 hover:text-blue-800 more-url"
-                    target="_blank"
-                    {...props}
-                  />
-                ),
-
                   table: ({...props}) => (
-                    <div className="overflow-x-auto mb-4">
+                    <div className="overflow-x-auto my-4">
                       <table className="w-full border border-gray-200 text-sm rounded-lg overflow-hidden" {...props} />
                     </div>
                   ),
-
+              
                   thead: ({...props}) => (
                     <thead className="bg-gray-100 text-left" {...props} />
                   ),
-
+              
                   th: ({...props}) => (
                     <th className="border px-3 py-2 font-semibold text-gray-700" {...props} />
                   ),
-
+              
                   td: ({...props}) => (
                     <td className="border px-3 py-2" {...props} />
                   )
-
+              
                 }}
               >
                 {m.content}
