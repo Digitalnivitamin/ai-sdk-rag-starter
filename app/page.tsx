@@ -39,6 +39,9 @@ Kako vam lahko danes pomagam?`
 
     if(!question.trim()) return
 
+    // 👉 reset input TAKOJ
+    setInput("")
+
     const userMessage = {role:"user",content:question}
 
     setMessages(prev=>[...prev,userMessage])
@@ -65,7 +68,6 @@ Kako vam lahko danes pomagam?`
       }
     ])
 
-    setInput("")
     setLoading(false)
   }
 
@@ -82,7 +84,7 @@ Kako vam lahko danes pomagam?`
           alt="Vitaminko"
           width={34}
           height={34}
-          className="rounded-full flex-shrink-0"
+          className="rounded-full w-8 h-8 object-contain flex-shrink-0"
           unoptimized
         />
 
@@ -112,7 +114,7 @@ Kako vam lahko danes pomagam?`
                 alt="Vitaminko"
                 width={32}
                 height={32}
-                className="rounded-full mt-1 text-black"
+                className="rounded-full w-8 h-8 object-contain flex-shrink-0 mt-1"
                 unoptimized
               />
 
@@ -121,40 +123,44 @@ Kako vam lahko danes pomagam?`
             <div
               className={
                 m.role==="user"
-                ? "bg-blue-600 text-white px-4 py-3 rounded-xl max-w-[70%] text-[14.5px]"
-                : "bg-gray-50 border text-black border-gray-200 px-4 py-3 rounded-xl max-w-[70%]"
+                ? "bubble-user px-4 py-3 rounded-xl max-w-[70%]"
+                : "bubble-assistant px-4 py-3 rounded-xl max-w-[70%]"
               }
             >
 
               <ReactMarkdown
-                className="max-w-none text-[14.5px] leading-relaxed text-white"
+                className={
+                  m.role==="user"
+                  ? "markdown-user text-[14.5px] leading-relaxed"
+                  : "markdown-assistant text-[14.5px] leading-relaxed"
+                }
                 components={{
 
-                  h2: ({node, ...props}) => (
+                  h2: ({...props}) => (
                     <h2 className="text-[17px] font-semibold mt-4 mb-2" {...props} />
                   ),
 
-                  h3: ({node, ...props}) => (
+                  h3: ({...props}) => (
                     <h3 className="text-[15.5px] font-semibold mt-3 mb-2" {...props} />
                   ),
 
-                  p: ({node, ...props}) => (
-                    <p className="mb-4 leading-relaxed text-black" {...props} />
+                  p: ({...props}) => (
+                    <p className="mb-4 leading-relaxed" {...props} />
                   ),
 
-                  strong: ({node, ...props}) => (
-                    <strong className="font-semibold text-gray-900" {...props} />
+                  strong: ({...props}) => (
+                    <strong className="font-semibold" {...props} />
                   ),
 
-                  ul: ({node, ...props}) => (
-                    <ul className="list-disc ml-6 mb-5 space-y-2 marker:text-gray-500" {...props} />
+                  ul: ({...props}) => (
+                    <ul className="list-disc ml-6 mb-5 space-y-2" {...props} />
                   ),
 
-                  ol: ({node, ...props}) => (
-                    <ol className="list-decimal ml-6 mb-5 space-y-2 marker:text-gray-500" {...props} />
+                  ol: ({...props}) => (
+                    <ol className="list-decimal ml-6 mb-5 space-y-2" {...props} />
                   ),
 
-                  a: ({node, ...props}) => (
+                  a: ({...props}) => (
                     <a
                       className="underline text-blue-600 hover:text-blue-800"
                       target="_blank"
@@ -162,21 +168,21 @@ Kako vam lahko danes pomagam?`
                     />
                   ),
 
-                  table: ({node, ...props}) => (
+                  table: ({...props}) => (
                     <div className="overflow-x-auto mb-4">
                       <table className="w-full border border-gray-200 text-sm rounded-lg overflow-hidden" {...props} />
                     </div>
                   ),
 
-                  thead: ({node, ...props}) => (
+                  thead: ({...props}) => (
                     <thead className="bg-gray-100 text-left" {...props} />
                   ),
 
-                  th: ({node, ...props}) => (
+                  th: ({...props}) => (
                     <th className="border px-3 py-2 font-semibold text-gray-700" {...props} />
                   ),
 
-                  td: ({node, ...props}) => (
+                  td: ({...props}) => (
                     <td className="border px-3 py-2" {...props} />
                   )
 
@@ -184,8 +190,6 @@ Kako vam lahko danes pomagam?`
               >
                 {m.content}
               </ReactMarkdown>
-
-              {/* SOURCES */}
 
               {m.sources && (
 
@@ -231,11 +235,9 @@ Kako vam lahko danes pomagam?`
         )}
 
         {loading && (
-
           <div className="text-gray-400 text-sm italic">
             Vitaminko razmišlja...
           </div>
-
         )}
 
         <div ref={bottomRef}/>
