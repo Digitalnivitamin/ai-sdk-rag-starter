@@ -166,7 +166,7 @@ Kako vam lahko danes pomagam?`
               
                 a: ({...props}) => (
                   <a
-                    className="underline text-blue-600 hover:text-blue-800"
+                    className="underline text-blue-600 hover:text-blue-800 more-url"
                     target="_blank"
                     {...props}
                   />
