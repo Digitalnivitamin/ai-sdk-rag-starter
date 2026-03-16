@@ -192,22 +192,34 @@ Kako vam lahko danes pomagam?`
               </ReactMarkdown>
 
               {m.sources && (
-
-                <div className="mt-3 flex flex-wrap gap-2">
-
+              
+                <div className="mt-4 space-y-2">
+              
                   {m.sources.slice(0,2).map((s:any,i:number)=>(
-                    <a
+                    
+                    <div
                       key={i}
-                      href={s}
-                      target="_blank"
-                      className="text-xs bg-gray-100 px-2 py-1 rounded-md hover:bg-gray-200 transition"
+                      className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-[13px] italic"
                     >
-                      🔗 Vir
-                    </a>
+              
+                      <span className="font-medium not-italic mr-1">
+                        Več info:
+                      </span>
+              
+                      <a
+                        href={s}
+                        target="_blank"
+                        className="underline break-all hover:text-blue-600 transition"
+                      >
+                        {s}
+                      </a>
+              
+                    </div>
+              
                   ))}
-
+              
                 </div>
-
+              
               )}
 
             </div>
