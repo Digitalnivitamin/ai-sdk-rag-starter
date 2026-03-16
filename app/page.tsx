@@ -18,12 +18,21 @@ Kako vam lahko danes pomagam?`
 
   const [input,setInput] = useState("")
   const [loading,setLoading] = useState(false)
+  
+  const [showForm, setShowForm] = useState(false)
+
+  // ✅ FORM STATE
+  const [form,setForm] = useState({
+    name:"",
+    email:"",
+    message:""
+  })
 
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(()=>{
     bottomRef.current?.scrollIntoView({behavior:"smooth"})
-  },[messages])
+  },[messages, showForm])
 
   const quickQuestions = [
     "S čim se ukvarjate?",
@@ -39,7 +48,6 @@ Kako vam lahko danes pomagam?`
 
     if(!question.trim()) return
 
-    // 👉 reset input TAKOJ
     setInput("")
 
     const userMessage = {role:"user",content:question}
@@ -69,6 +77,26 @@ Kako vam lahko danes pomagam?`
     ])
 
     setLoading(false)
+  }
+
+  // ✅ SEND FORM
+  async function sendForm(){
+
+    if(!form.name || !form.email){
+      alert("Izpolni ime in email")
+      return
+    }
+
+    await fetch("/api/contact",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify(form)
+    })
+
+    setForm({ name:"", email:"", message:"" })
+    setShowForm(false)
+
+    alert("Povpraševanje poslano 👍")
   }
 
   return (
@@ -135,9 +163,7 @@ Kako vam lahko danes pomagam?`
                     : "prose prose-sm max-w-none"
                 }
                 components={{
-              
-                  // 👉 pustimo samo stvari, ki jih prose ne pokrije idealno
-              
+
                   a: ({...props}) => (
                     <a
                       className="underline text-blue-600 hover:text-blue-800 break-all"
@@ -145,25 +171,25 @@ Kako vam lahko danes pomagam?`
                       {...props}
                     />
                   ),
-              
+
                   table: ({...props}) => (
                     <div className="overflow-x-auto my-4">
                       <table className="w-full border border-gray-200 text-sm rounded-lg overflow-hidden" {...props} />
                     </div>
                   ),
-              
+
                   thead: ({...props}) => (
                     <thead className="bg-gray-100 text-left" {...props} />
                   ),
-              
+
                   th: ({...props}) => (
                     <th className="border px-3 py-2 font-semibold text-gray-700" {...props} />
                   ),
-              
+
                   td: ({...props}) => (
                     <td className="border px-3 py-2" {...props} />
                   )
-              
+
                 }}
               >
                 {m.content}
@@ -171,39 +197,39 @@ Kako vam lahko danes pomagam?`
 
               {Array.isArray(m.sources) && m.sources.length > 0 && (
 
-  <div className="mt-4 space-y-2">
+                <div className="mt-4 space-y-2">
 
-    {m.sources.slice(0,2).map((s:any,i:number)=>{
+                  {m.sources.slice(0,2).map((s:any,i:number)=>{
 
-      const url = typeof s === "string" ? s : s?.url
+                    const url = typeof s === "string" ? s : s?.url
 
-      if(!url) return null
+                    if(!url) return null
 
-      return (
-        <div
-          key={i}
-          className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-[13px] italic"
-        >
+                    return (
+                      <div
+                        key={i}
+                        className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-[13px] italic"
+                      >
 
-          <span className="font-medium not-italic mr-1">
-            Več info:
-          </span>
+                        <span className="font-medium not-italic mr-1">
+                          Več info:
+                        </span>
 
-          <a
-            href={url}
-            target="_blank"
-            className="underline break-all hover:text-blue-600 transition"
-          >
-            {url}
-          </a>
+                        <a
+                          href={url}
+                          target="_blank"
+                          className="underline break-all hover:text-blue-600 transition"
+                        >
+                          {url}
+                        </a>
 
-        </div>
-      )
-    })}
+                      </div>
+                    )
+                  })}
 
-  </div>
+                </div>
 
-)}
+              )}
 
             </div>
 
@@ -233,6 +259,69 @@ Kako vam lahko danes pomagam?`
           <div className="text-gray-400 text-sm italic">
             Vitaminko razmišlja...
           </div>
+        )}
+
+        {/* ✅ CTA BUTTON */}
+        <div className="flex justify-center">
+          <button
+            onClick={()=>setShowForm(true)}
+            className="text-sm underline text-gray-500 hover:text-black transition"
+          >
+            Želite ponudbo ali kontakt? Kliknite tukaj
+          </button>
+        </div>
+
+        {/* ✅ FORM */}
+        {showForm && (
+
+          <div className="mt-6 max-w-md mx-auto bg-white border border-gray-200 rounded-xl p-5 shadow-sm space-y-3">
+
+            <div className="font-semibold text-[15px]">
+              Pošljite povpraševanje
+            </div>
+
+            <input
+              value={form.name}
+              onChange={(e)=>setForm({...form, name:e.target.value})}
+              placeholder="Ime *"
+              className="w-full border px-3 py-2 rounded-md text-sm"
+            />
+
+            <input
+              value={form.email}
+              onChange={(e)=>setForm({...form, email:e.target.value})}
+              placeholder="Email *"
+              className="w-full border px-3 py-2 rounded-md text-sm"
+            />
+
+            <textarea
+              value={form.message}
+              onChange={(e)=>setForm({...form, message:e.target.value})}
+              placeholder="Vaše sporočilo"
+              className="w-full border px-3 py-2 rounded-md text-sm"
+              rows={3}
+            />
+
+            <div className="flex gap-2 pt-2">
+
+              <button
+                onClick={sendForm}
+                className="bg-black text-white px-4 py-2 rounded-md text-sm"
+              >
+                Pošlji
+              </button>
+
+              <button
+                onClick={()=>setShowForm(false)}
+                className="text-sm text-gray-500"
+              >
+                Zapri
+              </button>
+
+            </div>
+
+          </div>
+
         )}
 
         <div ref={bottomRef}/>
