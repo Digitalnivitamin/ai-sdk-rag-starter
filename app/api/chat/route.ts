@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
   const { data } = await supabase.rpc("match_documents", {
     query_embedding: embedding.data[0].embedding,
-    match_count: 5
+    match_count: 4
   })
 
   const context = data.map((d:any)=>
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
   const completion = await openai.chat.completions.create({
 
-    model: "gpt-4.1",
+    model: "gpt-4o-mini",
 
     messages: [
 
