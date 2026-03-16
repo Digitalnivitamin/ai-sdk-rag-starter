@@ -95,4 +95,13 @@
     @apply text-gray-900;
   }
 
+ .more-url{
+    padding: 5px 10px;
+    background: lightgrey;
+    border-radius: 28px;
+    color: #000;
+    font-size: 12px;
+    font-style: italic;
+ }
+
 }
