@@ -237,6 +237,32 @@ Kako vam lahko danes pomagam?`
           </div>
         )}
 
+        {messages.length === 1 && (
+
+  <div className="space-y-3">
+
+    <div className="text-sm text-gray-500">
+      Izberite temo ali zastavite vprašanje:
+    </div>
+
+    <div className="grid grid-cols-2 gap-2">
+
+      {quickQuestions.map((q,i)=>(
+        <button
+          key={i}
+          onClick={()=>ask(null,q)}
+          className="text-left border px-3 py-3 rounded-xl text-sm hover:bg-gray-100 transition"
+        >
+          {q}
+        </button>
+      ))}
+
+    </div>
+
+  </div>
+
+)}
+
         <div className="flex justify-center">
           <button
             onClick={()=>setShowForm(true)}
