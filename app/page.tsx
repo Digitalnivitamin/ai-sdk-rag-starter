@@ -288,7 +288,7 @@ Kako vam lahko danes pomagam?`
 
               <label>
                 Strinjam se z obdelavo osebnih podatkov v skladu z{" "}
-                <a href="/privacy-policy" target="_blank" className="underline">
+                <a href="https://www.d-vitamin.si/pravila-uporabe" target="_blank" className="underline">
                   politiko zasebnosti
                 </a>.
               </label>
