@@ -21,12 +21,14 @@ Kako vam lahko danes pomagam?`
   
   const [showForm, setShowForm] = useState(false)
 
-  // ✅ FORM STATE
   const [form,setForm] = useState({
     name:"",
     email:"",
     message:""
   })
+
+  // ✅ GDPR CONSENT
+  const [consent, setConsent] = useState(false)
 
   const bottomRef = useRef<HTMLDivElement>(null)
 
@@ -79,11 +81,16 @@ Kako vam lahko danes pomagam?`
     setLoading(false)
   }
 
-  // ✅ SEND FORM
+  // ✅ SEND FORM (z GDPR check)
   async function sendForm(){
 
     if(!form.name || !form.email){
       alert("Izpolni ime in email")
+      return
+    }
+
+    if(!consent){
+      alert("Potrebno je soglasje za pošiljanje")
       return
     }
 
@@ -94,6 +101,7 @@ Kako vam lahko danes pomagam?`
     })
 
     setForm({ name:"", email:"", message:"" })
+    setConsent(false)
     setShowForm(false)
 
     alert("Povpraševanje poslano 👍")
@@ -102,8 +110,6 @@ Kako vam lahko danes pomagam?`
   return (
 
     <main className="h-screen flex flex-col bg-white">
-
-      {/* HEADER */}
 
       <div className="border-b px-6 py-4 flex items-center gap-3">
 
@@ -121,8 +127,6 @@ Kako vam lahko danes pomagam?`
         </div>
 
       </div>
-
-      {/* CHAT AREA */}
 
       <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
 
@@ -163,7 +167,6 @@ Kako vam lahko danes pomagam?`
                     : "prose prose-sm max-w-none"
                 }
                 components={{
-
                   a: ({...props}) => (
                     <a
                       className="underline text-blue-600 hover:text-blue-800 break-all"
@@ -171,25 +174,20 @@ Kako vam lahko danes pomagam?`
                       {...props}
                     />
                   ),
-
                   table: ({...props}) => (
                     <div className="overflow-x-auto my-4">
                       <table className="w-full border border-gray-200 text-sm rounded-lg overflow-hidden" {...props} />
                     </div>
                   ),
-
                   thead: ({...props}) => (
                     <thead className="bg-gray-100 text-left" {...props} />
                   ),
-
                   th: ({...props}) => (
                     <th className="border px-3 py-2 font-semibold text-gray-700" {...props} />
                   ),
-
                   td: ({...props}) => (
                     <td className="border px-3 py-2" {...props} />
                   )
-
                 }}
               >
                 {m.content}
@@ -202,7 +200,6 @@ Kako vam lahko danes pomagam?`
                   {m.sources.slice(0,2).map((s:any,i:number)=>{
 
                     const url = typeof s === "string" ? s : s?.url
-
                     if(!url) return null
 
                     return (
@@ -210,11 +207,9 @@ Kako vam lahko danes pomagam?`
                         key={i}
                         className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-[13px] italic"
                       >
-
                         <span className="font-medium not-italic mr-1">
                           Več info:
                         </span>
-
                         <a
                           href={url}
                           target="_blank"
@@ -222,7 +217,6 @@ Kako vam lahko danes pomagam?`
                         >
                           {url}
                         </a>
-
                       </div>
                     )
                   })}
@@ -237,31 +231,12 @@ Kako vam lahko danes pomagam?`
 
         ))}
 
-        {messages.length === 1 && (
-
-          <div className="flex flex-wrap gap-2">
-
-            {quickQuestions.map((q,i)=>(
-              <button
-                key={i}
-                onClick={()=>ask(null,q)}
-                className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition"
-              >
-                {q}
-              </button>
-            ))}
-
-          </div>
-
-        )}
-
         {loading && (
           <div className="text-gray-400 text-sm italic">
             Vitaminko razmišlja...
           </div>
         )}
 
-        {/* ✅ CTA BUTTON */}
         <div className="flex justify-center">
           <button
             onClick={()=>setShowForm(true)}
@@ -271,7 +246,6 @@ Kako vam lahko danes pomagam?`
           </button>
         </div>
 
-        {/* ✅ FORM */}
         {showForm && (
 
           <div className="mt-6 max-w-md mx-auto bg-white border border-gray-200 rounded-xl p-5 shadow-sm space-y-3">
@@ -302,6 +276,25 @@ Kako vam lahko danes pomagam?`
               rows={3}
             />
 
+            {/* ✅ GDPR CHECKBOX */}
+            <div className="flex items-start gap-2 text-xs text-gray-600">
+
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={(e)=>setConsent(e.target.checked)}
+                className="mt-1"
+              />
+
+              <label>
+                Strinjam se z obdelavo osebnih podatkov v skladu z{" "}
+                <a href="/privacy-policy" target="_blank" className="underline">
+                  politiko zasebnosti
+                </a>.
+              </label>
+
+            </div>
+
             <div className="flex gap-2 pt-2">
 
               <button
@@ -328,8 +321,6 @@ Kako vam lahko danes pomagam?`
 
       </div>
 
-      {/* INPUT */}
-
       <form
         onSubmit={ask}
         className="border-t px-6 py-4 flex gap-3"
@@ -352,6 +343,5 @@ Kako vam lahko danes pomagam?`
       </form>
 
     </main>
-
   )
 }
