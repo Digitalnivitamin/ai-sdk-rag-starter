@@ -128,7 +128,7 @@ Kako vam lahko danes pomagam?`
 
       </div>
 
-      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
+      <div className="flex-1 overflow-y-auto px-3 py-3 space-y-8">
 
         {messages.map((m,i)=>(
 
@@ -156,7 +156,7 @@ Kako vam lahko danes pomagam?`
               className={
                 m.role==="user"
                 ? "bubble-user px-4 py-3 rounded-xl max-w-[70%]"
-                : "bubble-assistant px-4 py-3 rounded-xl max-w-[70%]"
+                : "bubble-assistant px-4 py-3 rounded-xl max-w-[86%]"
               }
             >
 
